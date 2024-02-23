@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Car, CarDocument } from 'src/schemas/car.schema';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
-import { InjectModel } from '@nestjs/mongoose';
-import { Car, CarDocument } from 'src/schemas/car.schema';
-import mongoose, { Model } from 'mongoose';
 
 @Injectable()
 export class CarsService {
@@ -11,28 +11,24 @@ export class CarsService {
     @InjectModel(Car.name) private readonly carModel: Model<CarDocument>,
   ) {}
 
-  async create(createCarDto: CreateCarDto) {
+  create(createCarDto: CreateCarDto) {
     const car = new this.carModel(createCarDto);
     return car.save();
   }
 
-  async findAll() {
+  findAll() {
     return this.carModel.find();
   }
 
   findOne(id: string) {
-    const objId = new mongoose.Types.ObjectId(id);
-    const teste = this.carModel.findById(objId);
-    console.log('teste :>>', teste);
-
-    return teste;
+    return this.carModel.findById(id);
   }
 
-  async update(id: string, updateCarDto: UpdateCarDto) {
+  update(id: string, updateCarDto: UpdateCarDto) {
     return this.carModel.findByIdAndUpdate(id, updateCarDto, { new: true });
   }
 
-  async remove(id: string) {
+  remove(id: string) {
     return this.carModel.findByIdAndDelete(id);
   }
 }

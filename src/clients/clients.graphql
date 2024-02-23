@@ -1,0 +1,30 @@
+type Client {
+  id: String!
+  name: String!
+  age: Int!
+  birthDate: String!
+}
+
+input CreateClientInput {
+  name: String!
+  age: Int!
+  birthDate: String!
+}
+
+input UpdateClientInput {
+  id: String!
+  name: String
+  age: Int
+  birthDate: String
+}
+
+type Query {
+  clients: [Client]!
+  client(id: String!): Client
+}
+
+type Mutation {
+  createClient(createClientInput: CreateClientInput!): Client!
+  updateClient(updateClientInput: UpdateClientInput!): Client!
+  removeClient(id: String!): Client
+}
