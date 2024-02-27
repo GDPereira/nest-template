@@ -14,5 +14,6 @@ import { Client, ClientSchema } from 'src/schemas/client.schema';
     ]),
   ],
   providers: [ClientsResolver, ClientsService],
+  exports: [ClientsService],
 })
 export class ClientsModule {}
